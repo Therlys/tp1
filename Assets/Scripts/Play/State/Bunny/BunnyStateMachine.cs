@@ -1,8 +1,8 @@
 ﻿namespace Game
 {
-    public class BunnyBaseStateMachine : BaseStateMachine
+    public class BunnyStateMachine : BaseStateMachine
     {
-        public BunnyBaseStateMachine(IState startingState) : base(startingState)
+        public BunnyStateMachine(IState startingState) : base(startingState)
         {
             
         }
