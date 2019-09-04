@@ -275,14 +275,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c8afdaa0544c4e8f58fc1d4e6b793d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialHunger: 0.7
-  initialThirst: 0.5
+  initialHunger: 0
+  initialThirst: 0
   initialReproductiveUrge: 0
   hungerPerSecond: 0.01
   thirstPerSecond: 0.05
   reproductiveUrgePerSecond: 0.02
-  hungerDeathThreshold: 1
-  thirstDeathThreshold: 1
+  hungerDeathThreshold: 2000
+  thirstDeathThreshold: 2000
 --- !u!1 &8660195788474206071
 GameObject:
   m_ObjectHideFlags: 0

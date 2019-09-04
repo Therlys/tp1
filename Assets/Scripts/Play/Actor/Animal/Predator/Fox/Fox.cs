@@ -16,7 +16,7 @@ namespace Game
                     {
                         eatable = bunny;
                     }
-                    Debug.Log(MathExtensions.SquareDistanceBetween(Position, bunny.Position) + " - " +  MathExtensions.SquareDistanceBetween(Position, eatable.Position));
+                    Debug.Log(bunny.name);
                 }
             }
             return eatable;

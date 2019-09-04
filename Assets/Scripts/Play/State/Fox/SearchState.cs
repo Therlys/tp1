@@ -12,15 +12,14 @@ namespace Game
 
         public override void Enter()
         {
-            base.Enter();
+            animal.MoveTo(null);
         }
         
         public override IState Update()
         {
             if (animal.IsHungry)
             {
-                var eatable = animal.GetNearestEatable();
-                if (eatable != null) return new EatState(animal, eatable);
+                return new EatState(animal);
             }
             else if(animal.IsHorny)
             {
@@ -29,7 +28,6 @@ namespace Game
             else
             {
             }
-            
             return this;
         }
 

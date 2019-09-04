@@ -16,6 +16,7 @@ namespace Game
         {
             randomSeed = Finder.RandomSeed;
             navigationMesh = Finder.NavigationMesh;
+            random = randomSeed.CreateRandom();
         }
 
         private void OnEnable()

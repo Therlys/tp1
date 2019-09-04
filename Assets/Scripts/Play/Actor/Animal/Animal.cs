@@ -19,6 +19,7 @@ namespace Game
         private OffspringCreator offspringCreator;
         private Sensor sensor;
         private StateMachine stateMachine;
+        private Coroutine routineForMoving;
 
         private List<Node> nodes;
 
@@ -105,21 +106,24 @@ namespace Game
 
         public abstract IEatable GetNearestEatable();
 
-        public void SetCurrentTargetPosition(Vector3? targetPosition)
+        public void MoveTo(Vector3? destination)
         {
-            nodes = targetPosition == null ? pathFinder.FindRandomWalk(Position, 1) : pathFinder.FindPath(Position, (Vector3)targetPosition);
-            StartCoroutine(FollowPath());
+            if(routineForMoving != null)
+            StopCoroutine(routineForMoving);
+            nodes = destination == null
+                ? pathFinder.FindRandomWalk(Position, 10)
+                : pathFinder.FindPath(Position, (Vector3) destination);
+            routineForMoving =  StartCoroutine(MoveToRoutine());
         }
 
-        private IEnumerator FollowPath()
+        private IEnumerator MoveToRoutine()
         {
             foreach (var node in nodes)
             {
                 mover.MoveTo(node.Position3D);
                 yield return new WaitForSeconds(1.0f);
             }
-            
-            nodes = null;
+            MoveTo(null);
         }
 
         public bool Eat(IEatable eatable)

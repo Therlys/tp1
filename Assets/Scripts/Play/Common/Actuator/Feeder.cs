@@ -52,9 +52,7 @@ namespace Game
         private bool IsInReach(IEntity eatable, float maxDistance)
         {
             //Use a square to compute max distance for performance reasons.
-            if (Mathf.Abs(entity.Position.x - eatable.Position.x) <= maxDistance) return true;
-            if (Mathf.Abs(entity.Position.y - eatable.Position.y) <= maxDistance) return true;
-            return false;
+            return MathExtensions.SquareDistanceBetween(entity.Position, eatable.Position) <= maxDistance;
         }
     }
 }
