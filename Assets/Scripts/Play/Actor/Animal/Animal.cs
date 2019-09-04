@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Game
 {
@@ -15,11 +18,10 @@ namespace Game
         private Feeder feeder;
         private OffspringCreator offspringCreator;
         private Sensor sensor;
+        private StateMachine stateMachine;
 
-        //TODO : Lire ce commentaire.
-        //ATTENTION!!!!! Vous aurez besoin de ces objets pour faire les classes "Bunny" et "Fox".
-        //               Voici une description pour chacun.
-        //
+        private List<Node> nodes;
+
         //               PathFinder :        Outil de recherche de chemin sur un graphe. Permet de trouver un
         //                                   chemin d'un point A à un point B. Possède aussi d'autres méthodes
         //                                   de recherche de chemin, tels que la recherche d'un chemin aléatoire
@@ -58,6 +60,7 @@ namespace Game
             feeder = GetComponentInChildren<Feeder>();
             offspringCreator = GetComponentInChildren<OffspringCreator>();
             sensor = GetComponentInChildren<Sensor>();
+            stateMachine = new StateMachine(this);
         }
 
         private void Update()
@@ -66,7 +69,7 @@ namespace Game
             try
             {
 #endif
-                //TODO : Mettez à jour votre "State Machine" ici. Le "Try/Catch" est là pour vous aider à déboguer votre travail.
+                stateMachine.Update();
 #if UNITY_EDITOR
             }
             catch (Exception ex)
@@ -100,6 +103,30 @@ namespace Game
             Destroy(gameObject);
         }
 
+        public abstract IEatable GetNearestEatable();
+
+        public void SetCurrentTargetPosition(Vector3? targetPosition)
+        {
+            nodes = targetPosition == null ? pathFinder.FindRandomWalk(Position, 1) : pathFinder.FindPath(Position, (Vector3)targetPosition);
+            StartCoroutine(FollowPath());
+        }
+
+        private IEnumerator FollowPath()
+        {
+            foreach (var node in nodes)
+            {
+                mover.MoveTo(node.Position3D);
+                yield return new WaitForSeconds(1.0f);
+            }
+            
+            nodes = null;
+        }
+
+        public bool Eat(IEatable eatable)
+        {
+            return feeder.Eat(eatable);
+        }
+        
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {

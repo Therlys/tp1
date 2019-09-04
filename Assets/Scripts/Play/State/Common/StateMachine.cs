@@ -1,12 +1,12 @@
 ﻿namespace Game
 {
-    public class BaseStateMachine
+    public class StateMachine
     {
         private IState currentState;
 
-        public BaseStateMachine(IState startingState)
+        public StateMachine(Animal animal)
         {
-            currentState = startingState;
+            currentState = new SearchState(animal);
             currentState?.Enter();
         }
 

@@ -1,11 +1,13 @@
-﻿namespace Game
+﻿using UnityEngine;
+
+namespace Game
 {
     public class SearchState : BaseState
     {
-        private readonly Fox fox;
-        public SearchState(Fox fox)
+        private readonly Animal animal;
+        public SearchState(Animal animal)
         {
-            this.fox = fox;
+            this.animal = animal;
         }
 
         public override void Enter()
@@ -15,22 +17,17 @@
         
         public override IState Update()
         {
-            if (fox.IsThirsty)
+            if (animal.IsHungry)
             {
-                // Chercher nourriture
-                
+                var eatable = animal.GetNearestEatable();
+                if (eatable != null) return new EatState(animal, eatable);
             }
-            else if (fox.IsHungry)
-            {
-                // Chercher lapin
-            }
-            else if(fox.IsHorny)
+            else if(animal.IsHorny)
             {
                 // Chercher partenaire
             }
             else
             {
-                // Déplacement random
             }
             
             return this;

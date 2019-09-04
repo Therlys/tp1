@@ -21,9 +21,7 @@ namespace Game
         private void Awake()
         {
             rotationEuler = Vector3.zero;
-
-            //TODO : Lire ce commentaire.
-            //In the Editor, cursor is unlocked when ESC is pressed. 
+            
             Cursor.lockState = CursorLockMode.Locked;
         }
 

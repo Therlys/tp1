@@ -38,6 +38,11 @@ namespace Game
             var predatorSensor = bunnySensor.For<IPredator>();
         }
 
+        public override IEatable GetNearestEatable()
+        {
+            return null;
+        }
+
         public IEffect Eat()
         {
             Vitals.Die();
