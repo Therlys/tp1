@@ -40,7 +40,19 @@ namespace Game
 
         public override IEatable GetNearestEatable()
         {
-            return null;
+            IEatable eatable = null;
+            foreach (var sensedObject in Sensor.SensedObjects)
+            {
+                var grass = sensedObject.GetComponent<Grass>();
+                if (grass != null && grass.IsEatable)
+                {
+                    if (eatable == null || MathExtensions.SquareDistanceBetween(Position, grass.Position) < MathExtensions.SquareDistanceBetween(Position, eatable.Position))
+                    {
+                        eatable = grass;
+                    }
+                }
+            }
+            return eatable;
         }
 
         public IEffect Eat()

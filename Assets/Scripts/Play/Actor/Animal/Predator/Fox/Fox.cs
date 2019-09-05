@@ -10,13 +10,12 @@ namespace Game
             foreach (var sensedObject in Sensor.SensedObjects)
             {
                 var bunny = sensedObject.GetComponent<Bunny>();
-                if (bunny != null)
+                if (bunny != null && bunny.IsEatable)
                 {
-                    if (eatable == null || eatable.IsEatable && MathExtensions.SquareDistanceBetween(Position, bunny.Position) < MathExtensions.SquareDistanceBetween(Position, eatable.Position))
+                    if (eatable == null || MathExtensions.SquareDistanceBetween(Position, bunny.Position) < MathExtensions.SquareDistanceBetween(Position, eatable.Position))
                     {
                         eatable = bunny;
                     }
-                    Debug.Log(bunny.name);
                 }
             }
             return eatable;

@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Game
 {
@@ -21,8 +19,29 @@ namespace Game
         private Sensor sensor;
         private StateMachine stateMachine;
         private Coroutine routineForMoving;
+        private Coroutine moveToRoutine;
+        private bool stopping;
+        private List<Node> nodes = null;
+        public bool IsFollowingPath => nodes != null;
 
-        private List<Node> nodes;
+        /*private List<Node> Nodes
+        {
+            get { return nodes; }
+
+            set
+            {
+                if (value == null) nodes = null;
+                foreach (var node in value)
+                    {
+                        if (nodes == null || !nodes.Contains(node))
+                        {
+                            nodes = value;
+                            StartCoroutine(StopMoveToRoutine());
+                            break;
+                        }
+                    }
+            }
+        }*/
 
         //               PathFinder :        Outil de recherche de chemin sur un graphe. Permet de trouver un
         //                                   chemin d'un point A à un point B. Possède aussi d'autres méthodes
@@ -109,22 +128,43 @@ namespace Game
 
         public void MoveTo(Vector3? destination)
         {
-            if(routineForMoving != null)
-            StopCoroutine(routineForMoving);
-            nodes = destination == null
-                ? pathFinder.FindRandomWalk(Position, 10)
-                : pathFinder.FindPath(Position, (Vector3) destination);
-            routineForMoving =  StartCoroutine(MoveToRoutine());
+            if (stopping && moveToRoutine != null)
+            {
+                StopCoroutine(moveToRoutine);
+            }
+            moveToRoutine = StartCoroutine(MoveToRoutine(destination));
         }
 
-        private IEnumerator MoveToRoutine()
+        private IEnumerator FollowPathRoutine()
         {
-            foreach (var node in nodes)
+            if (nodes != null)
             {
-                mover.MoveTo(node.Position3D);
-                yield return new WaitForSeconds(1.0f);
+                foreach (var node in nodes)
+                {
+                    mover.MoveTo(node.Position3D);
+                    yield return new WaitForSeconds(1.0f);
+                }
             }
-            MoveTo(null);
+
+            nodes = null;
+        }
+
+        private IEnumerator MoveToRoutine(Vector3? destination)
+        {
+            stopping = true;
+            while (routineForMoving != null)
+            {
+                if (!mover.IsMoving)
+                {
+                    StopCoroutine(routineForMoving);
+                    nodes = null;
+                    routineForMoving = null;
+                }
+                yield return null;
+            }
+            nodes = destination == null ? pathFinder.FindRandomWalk(Position, 10) : pathFinder.FindPath(Position, (Vector3) destination);
+            routineForMoving = StartCoroutine(FollowPathRoutine());
+            stopping = false;
         }
 
         public bool Eat(IEatable eatable)

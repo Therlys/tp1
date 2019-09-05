@@ -12,11 +12,11 @@ namespace Game
 
         public override void Enter()
         {
-            base.Enter();
         }
         
         public override IState Update()
         {
+            if(!animal.IsFollowingPath) animal.MoveTo(null);
             if (animal.IsHungry)
             {
                 var eatable = animal.GetNearestEatable();

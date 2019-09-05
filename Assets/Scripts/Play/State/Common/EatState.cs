@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Game
 {
@@ -6,14 +7,11 @@ namespace Game
     {
         private readonly Animal animal;
         private IEatable eatable = null;
-        private Vector3 previousEatablePosition;
 
         public override void Enter()
         {
             eatable = animal.GetNearestEatable();
-            previousEatablePosition = eatable.Position;
-            animal.MoveTo(previousEatablePosition);
-            
+            animal.MoveTo(eatable.Position);
         }
         
         public EatState(Animal animal)
@@ -24,18 +22,12 @@ namespace Game
         public override IState Update()
         {
             eatable = animal.GetNearestEatable();
-            if (eatable.IsEatable && !animal.Eat(eatable))
-            {
-                if (previousEatablePosition != eatable.Position)
-                {
-                    previousEatablePosition = eatable.Position;
-                    animal.MoveTo(eatable.Position);   
-                }
-                return this;
-            }
-            return new SearchState(animal);
+            if (eatable == null || !eatable.IsEatable || animal.Eat(eatable)) return new SearchState(animal);
+            animal.MoveTo(eatable.Position);
+            return this;
 
         }
+
 
         public override void Leave()
         {
