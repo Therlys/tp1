@@ -44,12 +44,12 @@ namespace Game
             IEatable eatable = null;
             foreach (var sensedObject in Sensor.SensedObjects)
             {
-                var grass = sensedObject.GetComponent<Grass>();
-                if (grass != null && grass.IsEatable)
+                var vegetable = sensedObject.GetComponent<IVegetable>();
+                if (vegetable != null && vegetable.IsEatable)
                 {
-                    if (eatable == null || MathExtensions.SquareDistanceBetween(Position, grass.Position) < MathExtensions.SquareDistanceBetween(Position, eatable.Position))
+                    if (eatable == null || MathExtensions.SquareDistanceBetween(Position, vegetable.Position) < MathExtensions.SquareDistanceBetween(Position, eatable.Position))
                     {
-                        eatable = grass;
+                        eatable = vegetable;
                     }
                 }
             }

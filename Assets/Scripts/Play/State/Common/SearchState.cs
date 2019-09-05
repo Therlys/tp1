@@ -5,6 +5,7 @@ namespace Game
     public class SearchState : BaseState
     {
         private readonly Animal animal;
+        private const string STATE_TAG = "Searching...";
         public SearchState(Animal animal)
         {
             this.animal = animal;
@@ -12,6 +13,7 @@ namespace Game
 
         public override void Enter()
         {
+            animal.StateName = STATE_TAG;
         }
         
         public override IState Update()
@@ -25,12 +27,11 @@ namespace Game
 
             if (animal.IsHungry)
             {
-                var eatable = animal.GetNearestEatable();
-                if (eatable != null) return new EatState(animal);
+                return new EatState(animal);
             }
-            else if(animal.IsHorny)
+            else if(animal.IsThirsty)
             {
-                // Chercher partenaire
+                return new DrinkState(animal);
             }
             else
             {
