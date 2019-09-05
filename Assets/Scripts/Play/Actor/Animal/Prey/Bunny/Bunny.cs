@@ -5,8 +5,8 @@ namespace Game
     public sealed class Bunny : Animal, IPrey
     {
         [Header("Other")] [SerializeField] [Range(0f, 1f)] private float nutritiveValue = 1f;
-        private const float MAXIMUM_HUNT_DETECT_DISTANCE = 20f;
 
+        private const float MAXIMUM_HUNT_DETECT_DISTANCE = 20f;
         public bool IsEatable => !Vitals.IsDead;
 
         protected new void Awake()
@@ -75,16 +75,11 @@ namespace Game
 
         }
 
-        public bool IsBeingHunted()
+        public override bool IsBeingHunted()
         {
             var predator = GetNearestPredator();
             if (predator == null) return false;
             return MathExtensions.SquareDistanceBetween(Position, predator.Position) < MAXIMUM_HUNT_DETECT_DISTANCE;
-        }
-
-        public void GoAwayFromNearestPredator()
-        {
-            MoveTo(PathFinder.FindFleePath(Position, GetNearestPredator().Position).Position3D);
         }
 
         public IEffect Eat()

@@ -20,5 +20,15 @@ namespace Game
             }
             return eatable;
         }
+
+        public override IPredator GetNearestPredator()
+        {
+            return null;
+        }
+
+        public override bool IsBeingHunted()
+        {
+            return false;
+        }
     }
 }

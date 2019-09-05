@@ -20,21 +20,19 @@ namespace Game
         {
             if(!animal.IsFollowingPath) animal.MoveTo(null);
 
-            if (animal is Bunny && (animal as Bunny).IsBeingHunted())
+            if (animal.IsBeingHunted())
             {
-                return new HuntedState(animal as Bunny);
+                return new FleeState(animal);
             }
 
-            if (animal.IsHungry)
+            else if (animal.IsHungry)
             {
                 return new EatState(animal);
             }
+            
             else if(animal.IsThirsty)
             {
                 return new DrinkState(animal);
-            }
-            else
-            {
             }
 
             return this;

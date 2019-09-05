@@ -129,9 +129,14 @@ namespace Game
             return drinkable;
         }
 
-        public virtual IPredator GetNearestPredator()
+        public abstract IPredator GetNearestPredator();
+
+        public abstract bool IsBeingHunted();
+       
+
+        public void GoAwayFrom(Vector3? fleeingPosition)
         {
-            return null;
+            if(fleeingPosition != null) MoveTo(PathFinder.FindFleePath(Position, (Vector3)fleeingPosition).Position3D);
         }
 
 
