@@ -18,30 +18,16 @@ namespace Game
         private OffspringCreator offspringCreator;
         private Sensor sensor;
         private StateMachine stateMachine;
+        
         private Coroutine routineForMoving;
         private Coroutine moveToRoutine;
+        
         private bool stopping;
         private List<Node> nodes = null;
+        
         public bool IsFollowingPath => nodes != null;
 
-        /*private List<Node> Nodes
-        {
-            get { return nodes; }
-
-            set
-            {
-                if (value == null) nodes = null;
-                foreach (var node in value)
-                    {
-                        if (nodes == null || !nodes.Contains(node))
-                        {
-                            nodes = value;
-                            StartCoroutine(StopMoveToRoutine());
-                            break;
-                        }
-                    }
-            }
-        }*/
+        public string StateName { get; set; }
 
         //               PathFinder :        Outil de recherche de chemin sur un graphe. Permet de trouver un
         //                                   chemin d'un point A à un point B. Possède aussi d'autres méthodes
@@ -131,12 +117,12 @@ namespace Game
             IDrinkable drinkable = null;
             foreach (var sensedObject in Sensor.SensedObjects)
             {
-                var drinkableItem = sensedObject.GetComponent<IDrinkable>();
-                if (drinkableItem != null)
+                var sensedDrinkable = sensedObject.GetComponent<IDrinkable>();
+                if (sensedDrinkable != null)
                 {
-                    if (drinkable == null || MathExtensions.SquareDistanceBetween(Position, drinkableItem.Position) < MathExtensions.SquareDistanceBetween(Position, drinkable.Position))
+                    if (drinkable == null || MathExtensions.SquareDistanceBetween(Position, sensedDrinkable.Position) < MathExtensions.SquareDistanceBetween(Position, drinkable.Position))
                     {
-                        drinkable = drinkableItem;
+                        drinkable = sensedDrinkable;
                     }
                 }
             }
@@ -197,8 +183,9 @@ namespace Game
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            //TODO : Pour faciliter le déboguage, affichez des informations dans l'onglet "Scene" via la classe "GizmosExtensions".
-        }
+            if (StateName != null) GizmosExtensions.DrawText(Position, StateName);
+            if (nodes != null) GizmosExtensions.DrawPath(nodes);
+            }
 #endif
     }
 }

@@ -6,6 +6,13 @@ namespace Game
     public class DrinkState : BaseState
     {
         private readonly Animal animal;
+        private const string STATE_TAG = "Drinking...";
+
+        public override void Enter()
+        {
+            animal.StateName = STATE_TAG;
+        }
+
         public DrinkState(Animal animal)
         {
             this.animal = animal;
