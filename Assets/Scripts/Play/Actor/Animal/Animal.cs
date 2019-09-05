@@ -20,6 +20,7 @@ namespace Game
         private OffspringCreator offspringCreator;
         private Sensor sensor;
         private StateMachine stateMachine;
+        private Coroutine routineForMoving;
 
         private List<Node> nodes;
 
@@ -106,29 +107,24 @@ namespace Game
 
         public abstract IEatable GetNearestEatable();
 
-        public void MoveTo(Vector3 targetPosition)
+        public void MoveTo(Vector3? destination)
         {
-            StopCoroutine(FollowNodesPath());
-            nodes = pathFinder.FindPath(Position, targetPosition);
-            StartCoroutine(FollowNodesPath());
+            if(routineForMoving != null)
+            StopCoroutine(routineForMoving);
+            nodes = destination == null
+                ? pathFinder.FindRandomWalk(Position, 10)
+                : pathFinder.FindPath(Position, (Vector3) destination);
+            routineForMoving =  StartCoroutine(MoveToRoutine());
         }
 
-        public void SetRandomPath()
+        private IEnumerator MoveToRoutine()
         {
-            StopCoroutine(FollowNodesPath());
-            nodes = pathFinder.FindRandomWalk(Position, 3);
-            StartCoroutine(FollowNodesPath());
-        }
-
-        private IEnumerator FollowNodesPath()
-        {
-            for (int i = 0; i < nodes.Count; i++)
+            foreach (var node in nodes)
             {
-                mover.MoveTo(nodes.ElementAt(i).Position3D);
+                mover.MoveTo(node.Position3D);
                 yield return new WaitForSeconds(1.0f);
             }
-
-            SetRandomPath();
+            MoveTo(null);
         }
 
         public bool Eat(IEatable eatable)
@@ -137,15 +133,10 @@ namespace Game
         }
         
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
-            if(nodes == null) return;
-
-            for (int i = 1; i < nodes.Count; i++)
-            {
-                GizmosExtensions.DrawArrow(nodes.ElementAt(i-1).Position3D, nodes.ElementAt(i).Position3D, Color.green);
-            }
-        } 
+            //TODO : Pour faciliter le déboguage, affichez des informations dans l'onglet "Scene" via la classe "GizmosExtensions".
+        }
 #endif
     }
 }

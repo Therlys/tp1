@@ -13,7 +13,6 @@ namespace Game
         public override void Enter()
         {
             base.Enter();
-            animal.SetRandomPath();
         }
         
         public override IState Update()

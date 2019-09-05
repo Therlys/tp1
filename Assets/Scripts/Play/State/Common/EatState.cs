@@ -1,30 +1,45 @@
-﻿namespace Game
+﻿using UnityEngine;
+
+namespace Game
 {
     public class EatState : BaseState
     {
         private readonly Animal animal;
-        private readonly IEatable eatable;
+        private IEatable eatable = null;
+        private Vector3 previousEatablePosition;
 
-        public EatState(Animal animal, IEatable eatable)
-        {
-            this.animal = animal;
-            this.eatable = eatable;
-        }
-        
         public override void Enter()
         {
-            animal.MoveTo(eatable.Position);
+            eatable = animal.GetNearestEatable();
+            previousEatablePosition = eatable.Position;
+            animal.MoveTo(previousEatablePosition);
+            
+        }
+        
+        public EatState(Animal animal)
+        {
+            this.animal = animal;
         }
         
         public override IState Update()
         {
-            if (eatable.IsEatable && !animal.Eat(eatable)) return this;
-
+            eatable = animal.GetNearestEatable();
+            if (eatable.IsEatable && !animal.Eat(eatable))
+            {
+                if (previousEatablePosition != eatable.Position)
+                {
+                    previousEatablePosition = eatable.Position;
+                    animal.MoveTo(eatable.Position);   
+                }
+                return this;
+            }
             return new SearchState(animal);
+
         }
 
         public override void Leave()
         {
+            animal.SetCurrentTargetPosition(null);
         }
     }
 }

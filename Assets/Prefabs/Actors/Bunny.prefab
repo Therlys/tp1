@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e2c852291d48ffa7414f11e6ec0db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerThreshold: 0.8
-  thirstThreshold: 0.8
-  reproductiveUrgeThreshold: 0.6
-  searchMaxSteps: 100
+  hungerThreshold: 0.2
+  thirstThreshold: 0.2
+  reproductiveUrgeThreshold: 0.1
   nutritiveValue: 0.2
 --- !u!114 &3811587069204438660
 MonoBehaviour:
