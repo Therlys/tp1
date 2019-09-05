@@ -18,8 +18,8 @@ namespace Game
         private OffspringCreator offspringCreator;
         private Sensor sensor;
         private StateMachine stateMachine;
-        private Coroutine routineForMoving;
         private Coroutine moveToRoutine;
+        private Coroutine moveAwayFromRoutine;
         private bool stopping;
         private List<Node> nodes = null;
         public bool IsFollowingPath => nodes != null;
@@ -126,6 +126,13 @@ namespace Game
 
         public abstract IEatable GetNearestEatable();
 
+        public virtual IPredator GetNearestPredator()
+        {
+            return null;
+        }
+
+
+
         public void MoveTo(Vector3? destination)
         {
             if (stopping && moveToRoutine != null)
@@ -134,6 +141,7 @@ namespace Game
             }
             moveToRoutine = StartCoroutine(MoveToRoutine(destination));
         }
+
 
         private IEnumerator FollowPathRoutine()
         {
@@ -148,6 +156,7 @@ namespace Game
 
             nodes = null;
         }
+
 
         private IEnumerator MoveToRoutine(Vector3? destination)
         {

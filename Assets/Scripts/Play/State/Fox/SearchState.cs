@@ -17,6 +17,12 @@ namespace Game
         public override IState Update()
         {
             if(!animal.IsFollowingPath) animal.MoveTo(null);
+
+            if (animal is Bunny && (animal as Bunny).IsBeingHunted())
+            {
+                return new HuntedState(animal as Bunny);
+            }
+
             if (animal.IsHungry)
             {
                 var eatable = animal.GetNearestEatable();
@@ -29,7 +35,7 @@ namespace Game
             else
             {
             }
-            
+
             return this;
         }
 

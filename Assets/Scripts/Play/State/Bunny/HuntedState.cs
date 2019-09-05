@@ -15,7 +15,8 @@
         
         public override IState Update()
         {
-            
+            if(!bunny.IsBeingHunted()) return new SearchState(bunny);
+            bunny.GoAwayFromNearestPredator();
             return this;
         }
 
