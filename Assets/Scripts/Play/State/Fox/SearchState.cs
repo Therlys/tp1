@@ -20,7 +20,7 @@ namespace Game
             if (animal.IsHungry)
             {
                 var eatable = animal.GetNearestEatable();
-                if (eatable != null) return new EatState(animal, eatable);
+                if (eatable != null) return new EatState(animal);
             }
             else if(animal.IsHorny)
             {

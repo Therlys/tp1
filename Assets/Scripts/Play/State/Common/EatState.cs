@@ -39,7 +39,7 @@ namespace Game
 
         public override void Leave()
         {
-            animal.SetCurrentTargetPosition(null);
+            animal.MoveTo(null);
         }
     }
 }
