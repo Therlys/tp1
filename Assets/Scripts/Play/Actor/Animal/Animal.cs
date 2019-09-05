@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -105,21 +106,29 @@ namespace Game
 
         public abstract IEatable GetNearestEatable();
 
-        public void SetCurrentTargetPosition(Vector3? targetPosition)
+        public void MoveTo(Vector3 targetPosition)
         {
-            nodes = targetPosition == null ? pathFinder.FindRandomWalk(Position, 1) : pathFinder.FindPath(Position, (Vector3)targetPosition);
-            StartCoroutine(FollowPath());
+            StopCoroutine(FollowNodesPath());
+            nodes = pathFinder.FindPath(Position, targetPosition);
+            StartCoroutine(FollowNodesPath());
         }
 
-        private IEnumerator FollowPath()
+        public void SetRandomPath()
         {
-            foreach (var node in nodes)
+            StopCoroutine(FollowNodesPath());
+            nodes = pathFinder.FindRandomWalk(Position, 3);
+            StartCoroutine(FollowNodesPath());
+        }
+
+        private IEnumerator FollowNodesPath()
+        {
+            for (int i = 0; i < nodes.Count; i++)
             {
-                mover.MoveTo(node.Position3D);
+                mover.MoveTo(nodes.ElementAt(i).Position3D);
                 yield return new WaitForSeconds(1.0f);
             }
-            
-            nodes = null;
+
+            SetRandomPath();
         }
 
         public bool Eat(IEatable eatable)
@@ -128,10 +137,15 @@ namespace Game
         }
         
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
-            //TODO : Pour faciliter le déboguage, affichez des informations dans l'onglet "Scene" via la classe "GizmosExtensions".
-        }
+            if(nodes == null) return;
+
+            for (int i = 1; i < nodes.Count; i++)
+            {
+                GizmosExtensions.DrawArrow(nodes.ElementAt(i-1).Position3D, nodes.ElementAt(i).Position3D, Color.green);
+            }
+        } 
 #endif
     }
 }
