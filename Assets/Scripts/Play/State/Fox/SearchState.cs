@@ -19,12 +19,11 @@ namespace Game
             if(!animal.IsFollowingPath) animal.MoveTo(null);
             if (animal.IsHungry)
             {
-                var eatable = animal.GetNearestEatable();
-                if (eatable != null) return new EatState(animal);
+                return new EatState(animal);
             }
             else if(animal.IsHorny)
             {
-                // Chercher partenaire
+                return new DrinkState(animal);
             }
             else
             {

@@ -125,6 +125,23 @@ namespace Game
         }
 
         public abstract IEatable GetNearestEatable();
+        
+        public IDrinkable GetNearestDrinkable()
+        {
+            IDrinkable drinkable = null;
+            foreach (var sensedObject in Sensor.SensedObjects)
+            {
+                var drinkableItem = sensedObject.GetComponent<IDrinkable>();
+                if (drinkableItem != null)
+                {
+                    if (drinkable == null || MathExtensions.SquareDistanceBetween(Position, drinkableItem.Position) < MathExtensions.SquareDistanceBetween(Position, drinkable.Position))
+                    {
+                        drinkable = drinkableItem;
+                    }
+                }
+            }
+            return drinkable;
+        }
 
         public void MoveTo(Vector3? destination)
         {
@@ -170,6 +187,11 @@ namespace Game
         public bool Eat(IEatable eatable)
         {
             return feeder.Eat(eatable);
+        }
+        
+        public bool Drink(IDrinkable drinkable)
+        {
+            return feeder.Drink(drinkable);
         }
         
 #if UNITY_EDITOR
