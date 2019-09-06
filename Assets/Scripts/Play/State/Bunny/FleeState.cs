@@ -1,4 +1,6 @@
-﻿namespace Game
+﻿using UnityEngine;
+
+namespace Game
 {
     public class FleeState : BaseState
     {
@@ -19,8 +21,10 @@
         {
             if(!animal.IsBeingHunted()) return new SearchState(animal);
             var predator = animal.GetNearestPredator();
-            if(predator != null)
-            animal.GoAwayFrom(predator.Position);
+            if (predator != null)
+            {
+                animal.GoAwayFrom(predator.Position);
+            }
             else
             {
                 return new SearchState(animal);

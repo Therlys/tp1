@@ -136,7 +136,11 @@ namespace Game
 
         public void GoAwayFrom(Vector3? fleeingPosition)
         {
-            if(fleeingPosition != null) MoveTo(PathFinder.FindFleePath(Position, (Vector3)fleeingPosition).Position3D);
+            //Le node peut être null dû au fait que le lapin peut se retrouver pris dans un endroit qui ne le permet pas de s'enfuir
+            //Si aucun endroit n'est trouvé pour s'enfuir, cette méthode-ci retourne nulle, donc il faut mettre le node dans une variable
+            //et mettre une condition pour savoir si le node n'est pas null
+            Node node = PathFinder.FindFleePath(Position, (Vector3) fleeingPosition);
+            if(node != null) MoveTo(node.Position3D);
         }
 
 
@@ -197,7 +201,7 @@ namespace Game
         {
             if (StateName != null) GizmosExtensions.DrawText(Position, StateName);
             if (nodes != null) GizmosExtensions.DrawPath(nodes);
-            }
+        }
 #endif
     }
 }
