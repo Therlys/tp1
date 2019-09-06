@@ -10,7 +10,9 @@ namespace Game
 
         public override void Enter()
         {
-            animal.StateName = STATE_TAG;
+#if UNITY_EDITOR
+            animal.SetDebugStateTag(STATE_TAG);
+#endif
         }
 
         public DrinkState(Animal animal)

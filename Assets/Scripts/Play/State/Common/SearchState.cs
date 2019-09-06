@@ -4,8 +4,10 @@ namespace Game
 {
     public class SearchState : BaseState
     {
-        private readonly Animal animal;
+        private readonly Animal animal = null;
+#if UNITY_EDITOR
         private const string STATE_TAG = "Searching...";
+#endif
         public SearchState(Animal animal)
         {
             this.animal = animal;
@@ -13,7 +15,9 @@ namespace Game
 
         public override void Enter()
         {
-            animal.StateName = STATE_TAG;
+#if UNITY_EDITOR
+            animal.SetDebugStateTag(STATE_TAG);
+#endif
         }
         
         public override IState Update()
