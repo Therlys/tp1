@@ -6,11 +6,15 @@ namespace Game
     public class EatState : BaseState
     {
         private readonly Animal animal;
+#if UNITY_EDITOR
         private const string STATE_TAG = "Eating...";
+#endif
 
         public override void Enter()
         {
-            animal.StateName = STATE_TAG;
+#if UNITY_EDITOR
+            animal.SetDebugStateTag(STATE_TAG);
+#endif
         }
         
 
