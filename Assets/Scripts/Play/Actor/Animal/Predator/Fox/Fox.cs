@@ -20,6 +20,27 @@ namespace Game
             }
             return eatable;
         }
+        
+        public override Animal GetNearestFriend()
+        {
+            Animal friend = null;
+            foreach (var sensedObject in Sensor.SensedObjects)
+            {
+                var fox = sensedObject.GetComponent<Fox>();
+                if (fox != null && MathExtensions.SquareDistanceBetween(Position, fox.Position) <=
+                    OffspringCreator.ReproductionMaxRange && fox.IsAvailable)
+                {
+                    if (friend == null || MathExtensions.SquareDistanceBetween(Position, fox.Position) <
+                        MathExtensions.SquareDistanceBetween(Position, friend.Position))
+                    {
+                        if(friend != null) friend.StopRecurring(this);
+                        friend = fox;
+                        friend.AskToRecur(this);
+                    }
+                }
+            }
+            return friend;
+        }
 
         public override IPredator GetNearestPredator()
         {

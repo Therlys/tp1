@@ -71,9 +71,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49df656910f54d6fa27beec1afd85f1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerThreshold: 0.2
-  thirstThreshold: 0.2
-  reproductiveUrgeThreshold: 0.1
+  hungerThreshold: 0.6
+  thirstThreshold: 0.6
+  reproductiveUrgeThreshold: 0.8
+  IsRecurring: 0
 --- !u!1001 &1918646368269604955
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ namespace Game
     {
         protected override Animal CreateOffspringPrefab(Animal otherAnimal)
         {
-            var id = Animal.name + "+" + otherAnimal.name;
+            var id = "4";
             return PrefabFactory.CreateFox(id, Animal.Position, FaunaRoot);
         }
     }
