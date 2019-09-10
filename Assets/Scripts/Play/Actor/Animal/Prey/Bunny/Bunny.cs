@@ -80,6 +80,7 @@ namespace Game
 
         public IEffect Eat()
         {
+            Finder.GetStatisticGenerator().BunnyEatenDeath();
             Vitals.Die();
 
             return new LoseHungerEffect(nutritiveValue);

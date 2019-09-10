@@ -57,6 +57,9 @@ namespace Game
             offspringCreator = GetComponentInChildren<OffspringCreator>();
             sensor = GetComponentInChildren<Sensor>();
             stateMachine = new StateMachine(this);
+            Vitals.OwnerType = this.GetType();
+            if(Vitals.OwnerType == typeof(Game.Fox))
+            Debug.Log("Fox : " + (Vitals.OwnerType == typeof(Fox)));
         }
 
         public bool AskToRecur(Animal recurTarget)
