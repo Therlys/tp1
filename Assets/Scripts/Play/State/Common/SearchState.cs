@@ -28,15 +28,15 @@ namespace Game
             {
                 return new FleeState(animal);
             }
-
-            else if (animal.IsHungry)
-            {
-                return new EatState(animal);
-            }
             
             else if(animal.IsThirsty)
             {
                 return new DrinkState(animal);
+            }
+
+            else if (animal.IsHungry)
+            {
+                return new EatState(animal);
             }
 
             return this;
