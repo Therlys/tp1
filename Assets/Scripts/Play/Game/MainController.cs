@@ -10,8 +10,6 @@ namespace Game
         [SerializeField] private KeyCode timeScaleUpKey = KeyCode.KeypadPlus;
         [SerializeField] private KeyCode timeScaleDownKey = KeyCode.KeypadMinus;
         [SerializeField] private float timeScaleIncrement = 1;
-        private Coroutine statisticToDatabaseCoroutine;
-        private bool gameRunning = true;
         private void Awake()
         {
             DOTween.Init(false, false, LogBehaviour.ErrorsOnly);
@@ -43,13 +41,7 @@ namespace Game
             transaction.Commit();
             
             connection.Close();*/
-            statisticToDatabaseCoroutine = StartCoroutine(GenerateStatisticInDatabase());
             
-        }
-
-        private void OnDestroy()
-        {
-            StopCoroutine(statisticToDatabaseCoroutine);
         }
 
         private void Update()
@@ -60,18 +52,5 @@ namespace Game
                 Time.timeScale -= timeScaleIncrement;
         }
 
-        private IEnumerator GenerateStatisticInDatabase()
-        {
-            while (gameRunning)
-            {
-                yield return new WaitForSeconds(1);
-                Finder.GetStatisticGenerator().AddStatisticToDatabase();
-            }
-        }
-
-        private void OnApplicationQuit()
-        {
-            gameRunning = false;
-        }
     }
 }

@@ -23,7 +23,6 @@ namespace Game
         {
             var newBunny = Create<Bunny>(bunny, position, parent);
             newBunny.name = $"Bunny({id})";
-            Finder.GetStatisticGenerator().BunnySpawn();
             return newBunny;
         }
 
@@ -31,7 +30,6 @@ namespace Game
         {
             var newFox = Create<Fox>(fox, position, parent);
             newFox.name = $"Fox({id})";
-            Finder.GetStatisticGenerator().FoxSpawn();
             return newFox;
         }
 
