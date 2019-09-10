@@ -18,6 +18,8 @@ namespace Game
         private OffspringCreator offspringCreator;
         private Sensor sensor;
         private StateMachine stateMachine;
+
+        private Animal recurTarget = null;
         
         private Coroutine routineForMoving;
         private Coroutine moveToRoutine;
@@ -42,6 +44,9 @@ namespace Game
         public bool IsThirsty => vitals.Thirst > thirstThreshold;
         public bool IsHorny => vitals.ReproductiveUrge > reproductiveUrgeThreshold;
         public bool IsDead => vitals.IsDead;
+        public bool IsAvailable => recurTarget == null || !IsRecurring;
+
+        public bool IsRecurring = false;
 
         protected void Awake()
         {
@@ -52,6 +57,22 @@ namespace Game
             offspringCreator = GetComponentInChildren<OffspringCreator>();
             sensor = GetComponentInChildren<Sensor>();
             stateMachine = new StateMachine(this);
+        }
+
+        public bool AskToRecur(Animal recurTarget)
+        {
+            if (recurTarget != null) return false;
+            else
+            {
+                this.recurTarget = recurTarget;
+                return true;
+            }
+        }
+
+        public void StopRecurring(Animal recurTarget)
+        {
+            if (this.recurTarget == recurTarget) recurTarget = null;
+            
         }
 
         private void Update()
@@ -112,14 +133,17 @@ namespace Game
             }
             return drinkable;
         }
-
+#if UNITY_EDITOR
         public void SetDebugStateTag(string debugStateTag)
         {
             this.debugStateTag = debugStateTag;
         }
+#endif
         
 
         public abstract IPredator GetNearestPredator();
+
+        public abstract Animal GetNearestFriend();
 
         public abstract bool IsBeingHunted();
        
@@ -137,6 +161,7 @@ namespace Game
 
         public void MoveTo(Vector3? destination)
         {
+            if(!IsAvailable) return;
             if (stopping && moveToRoutine != null)
             {
                 StopCoroutine(moveToRoutine);
@@ -184,6 +209,12 @@ namespace Game
         public bool Drink(IDrinkable drinkable)
         {
             return feeder.Drink(drinkable);
+        }
+
+        public bool CreateOffspringWith(Animal friend)
+        {
+            friend.StopRecurring(this);
+            return offspringCreator.CreateOffspringWith(friend);
         }
         
 #if UNITY_EDITOR

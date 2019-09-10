@@ -38,6 +38,10 @@ namespace Game
             {
                 return new DrinkState(animal);
             }
+            else if (animal.IsHorny)
+            {
+                return new HornyState(animal);
+            }
 
             return this;
         }
