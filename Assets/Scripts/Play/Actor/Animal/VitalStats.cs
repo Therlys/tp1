@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -12,7 +13,9 @@ namespace Game
         [SerializeField] private float reproductiveUrgePerSecond = 0.1f;
         [Header("Death")] [SerializeField] private float hungerDeathThreshold = 1f;
         [SerializeField] private float thirstDeathThreshold = 1f;
-
+        public Type OwnerType = null;
+        
+        
         private float hunger;
         private float thirst;
         private float reproductiveUrge;
@@ -67,8 +70,27 @@ namespace Game
                 Thirst += thirstPerSecond * Time.deltaTime;
                 ReproductiveUrge += reproductiveUrgePerSecond * Time.deltaTime;
 
-                if (Hunger >= hungerDeathThreshold || Thirst >= thirstDeathThreshold)
+                if (Hunger >= hungerDeathThreshold)
+                {
+                    if(OwnerType == typeof(Fox))
+                        Finder.GetStatisticGenerator().FoxHungerDeath();
+                    else
+                    {
+                        Finder.GetStatisticGenerator().BunnyHungerDeath();
+                    }
                     Die();
+                }
+
+                if (Thirst >= thirstDeathThreshold)
+                {
+                    if(OwnerType == typeof(Fox))
+                        Finder.GetStatisticGenerator().FoxThirstDeath();
+                    else
+                    {
+                        Finder.GetStatisticGenerator().BunnyThirstDeath();
+                    }
+                    Die();
+                }
             }
         }
 

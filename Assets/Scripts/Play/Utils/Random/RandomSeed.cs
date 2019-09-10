@@ -15,6 +15,7 @@ namespace Game
             get
             {
                 if (!seed.HasValue) seed = useRandomSeed ? UnityEngine.Random.Range(int.MinValue, int.MaxValue) : initialSeed;
+                Finder.GetStatisticGenerator().SetWorldSeed(seed.Value);
                 return seed.Value;
             }
         }

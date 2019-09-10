@@ -281,8 +281,8 @@ MonoBehaviour:
   hungerPerSecond: 0.01
   thirstPerSecond: 0.05
   reproductiveUrgePerSecond: 0.02
-  hungerDeathThreshold: 2000
-  thirstDeathThreshold: 2000
+  hungerDeathThreshold: 0.8
+  thirstDeathThreshold: 0.8
 --- !u!1 &8660195788474206071
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,11 @@ namespace Game
         //
         //       Remarquez que le "Finder" n'est nullement performant, car il n'utilise pas de cache. Vous
         //       n'avez pas à corriger ce défaut.
+
+        private static StatisticGenerator statisticGenerator = null;
+
+        private static StatisticRepository statisticRepository = null;
+
         public static SqLiteConnectionFactory SqLiteConnectionFactory => FindWithTag<SqLiteConnectionFactory>(Tags.MAIN_CONTROLLER);
         public static RandomSeed RandomSeed => FindWithTag<RandomSeed>(Tags.MAIN_CONTROLLER);
         public static PrefabFactory PrefabFactory => FindWithTag<PrefabFactory>(Tags.MAIN_CONTROLLER);
@@ -22,6 +27,17 @@ namespace Game
         private static T FindWithTag<T>(string tag)
         {
             return GameObject.FindWithTag(tag).GetComponent<T>();
+        }
+
+        public static StatisticRepository GetStatisticRepository()
+        {
+            return statisticRepository ??
+                   (statisticRepository = new StatisticRepository(SqLiteConnectionFactory.GetConnection()));
+        }
+
+        public static StatisticGenerator GetStatisticGenerator()
+        {
+            return statisticGenerator ?? (statisticGenerator = new StatisticGenerator());
         }
     }
 }
