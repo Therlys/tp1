@@ -49,6 +49,7 @@ namespace Game
             return IsInReach(eatable, maxDrinkDistance);
         }
 
+        //Author: Jérémie Bertrand & Mike Bédard
         private bool IsInReach(IEntity eatable, float maxDistance)
         {
             //Use a square to compute max distance for performance reasons.

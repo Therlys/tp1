@@ -2,6 +2,7 @@
 
 namespace Game
 {
+    //Author: Mike Bédard
     public class FoxSpawnEventChannel : MonoBehaviour
     {
         public event FoxSpawnEventHandler OnFoxSpawn;

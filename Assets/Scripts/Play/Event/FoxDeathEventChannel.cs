@@ -2,6 +2,7 @@
 
 namespace Game
 {
+    //Author: Mike Bédard
     public class FoxDeathEventChannel : MonoBehaviour
     {
         public event FoxHungerDeathEventHandler OnFoxHungerDeath;

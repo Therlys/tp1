@@ -25,7 +25,7 @@ namespace Game
         private Coroutine routineForMoving;
         private Coroutine moveToRoutine;
         
-        private bool stopping;
+        private bool isMoving = false;
         private List<Node> nodes = null;
         
         public bool IsFollowingPath => nodes != null;
@@ -168,7 +168,7 @@ namespace Game
         public void MoveTo(Vector3? destination)
         {
             if(!IsAvailable) return;
-            if (stopping && moveToRoutine != null)
+            if (!isMoving && moveToRoutine != null)
             {
                 StopCoroutine(moveToRoutine);
             }
@@ -191,7 +191,7 @@ namespace Game
 
         private IEnumerator MoveToRoutine(Vector3? destination)
         {
-            stopping = true;
+            isMoving = false;
             while (routineForMoving != null)
             {
                 if (!mover.IsMoving)
@@ -204,7 +204,7 @@ namespace Game
             }
             nodes = destination == null ? pathFinder.FindRandomWalk(Position, 10) : pathFinder.FindPath(Position, (Vector3) destination);
             routineForMoving = StartCoroutine(FollowPathRoutine());
-            stopping = false;
+            isMoving = true;
         }
 
         public bool Eat(IEatable eatable)
@@ -219,7 +219,7 @@ namespace Game
 
         public bool CreateOffspringWith(Animal friend)
         {
-            friend.vitals.HaveSex();
+            friend.Vitals.HaveSex();
             friend.StopRecurring(this);
             return offspringCreator.CreateOffspringWith(friend);
         }

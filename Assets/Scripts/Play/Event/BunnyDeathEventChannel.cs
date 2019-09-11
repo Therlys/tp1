@@ -3,6 +3,7 @@
 
 namespace Game
 {
+    //Author: Mike Bédard
     public class BunnyDeathEventChannel : MonoBehaviour
     {
         public event BunnyHungerDeathEventHandler OnBunnyHungerDeath;
