@@ -1,4 +1,7 @@
 ﻿
+/*
+ * Auteur Classe : Mike Bédard
+ */
 using System.Collections.Generic;
 
 /**

@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*
+ * Auteur Classe : Mike Bédard
+ */
+using System;
 
 namespace Harmony
 {

@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿/*
+ * Auteur Classe : Mike Bédard
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -12,11 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e2c852291d48ffa7414f11e6ec0db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerThreshold: 0.8
+  hungerThreshold: 0.6
   thirstThreshold: 0.6
   reproductiveUrgeThreshold: 0.8
   IsRecurring: 0
   nutritiveValue: 0.2
+--- !u!114 &3811587069204438660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670537837963157069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76bc7a3dae704c31954ee8d20bbb4b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reproductionMaxRange: 1
 --- !u!23 &281748726801602399
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -64,19 +77,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3646347622097506717}
   m_Mesh: {fileID: -6475276739941358363, guid: e010df91c271d7b48a05a83862b75c1a, type: 3}
---- !u!114 &3811587069204438660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670537837963157069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76bc7a3dae704c31954ee8d20bbb4b35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reproductionMaxRange: 1
 --- !u!1001 &3176162857121834407
 PrefabInstance:
   m_ObjectHideFlags: 0

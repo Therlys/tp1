@@ -7,6 +7,8 @@ namespace Game
     {
         [Header("Other")] [SerializeField] [Range(0f, 1f)] private float nutritiveValue = 1f;
 
+        private BunnyDeathEventChannel bunnyDeathEventChannel;
+        private BunnySpawnEventChannel bunnySpawnEventChannel;
         private const float MAXIMUM_HUNT_DETECT_DISTANCE = 20f;
         public bool IsEatable => !Vitals.IsDead;
 
@@ -15,6 +17,13 @@ namespace Game
             base.Awake();
             var bunnySensor = Sensor;
             var predatorSensor = bunnySensor.For<IPredator>();
+            bunnyDeathEventChannel = Finder.BunnyDeathEventChannel;
+            bunnySpawnEventChannel = Finder.BunnySpawnEventChannel;
+        }
+
+        private void Start()
+        {
+            bunnySpawnEventChannel.NotifyBunnySpawn();
         }
 
         public override IEatable GetNearestEatable()
@@ -81,7 +90,7 @@ namespace Game
 
         public IEffect Eat()
         {
-            Finder.GetStatisticGenerator().BunnyEatenDeath();
+            bunnyDeathEventChannel.NotifyBunnyEatenDeath();
             Vitals.Die();
 
             return new LoseHungerEffect(nutritiveValue);

@@ -15,6 +15,12 @@ namespace Game
         private static StatisticGenerator statisticGenerator = null;
 
         private static StatisticRepository statisticRepository = null;
+        
+        
+        private static BunnyDeathEventChannel bunnyDeathEventChannel;
+        private static FoxDeathEventChannel foxDeathEventChannel;
+        private static BunnySpawnEventChannel bunnySpawnEventChannel;
+        private static FoxSpawnEventChannel foxSpawnEventChannel;
 
         public static SqLiteConnectionFactory SqLiteConnectionFactory => FindWithTag<SqLiteConnectionFactory>(Tags.MAIN_CONTROLLER);
         public static RandomSeed RandomSeed => FindWithTag<RandomSeed>(Tags.MAIN_CONTROLLER);
@@ -37,7 +43,47 @@ namespace Game
 
         public static StatisticGenerator GetStatisticGenerator()
         {
-            return statisticGenerator ?? (statisticGenerator = new StatisticGenerator());
+            return statisticGenerator ?? (statisticGenerator = GameObject.FindWithTag(Tags.MAIN_CONTROLLER).GetComponent<StatisticGenerator>());
+        }
+        
+        public static BunnyDeathEventChannel BunnyDeathEventChannel
+        {
+            get
+            {
+                if (bunnyDeathEventChannel == null)
+                    bunnyDeathEventChannel = GameObject.FindWithTag(Tags.MAIN_CONTROLLER).GetComponent<BunnyDeathEventChannel>();
+                return bunnyDeathEventChannel;
+            }
+        }
+        
+        public static FoxDeathEventChannel FoxDeathEventChannel
+        {
+            get
+            {
+                if (foxDeathEventChannel == null)
+                    foxDeathEventChannel = GameObject.FindWithTag(Tags.MAIN_CONTROLLER).GetComponent<FoxDeathEventChannel>();
+                return foxDeathEventChannel;
+            }
+        }
+        
+        public static BunnySpawnEventChannel BunnySpawnEventChannel
+        {
+            get
+            {
+                if (bunnySpawnEventChannel == null)
+                    bunnySpawnEventChannel = GameObject.FindWithTag(Tags.MAIN_CONTROLLER).GetComponent<BunnySpawnEventChannel>();
+                return bunnySpawnEventChannel;
+            }
+        }
+        
+        public static FoxSpawnEventChannel FoxSpawnEventChannel
+        {
+            get
+            {
+                if (foxSpawnEventChannel == null)
+                    foxSpawnEventChannel = GameObject.FindWithTag(Tags.MAIN_CONTROLLER).GetComponent<FoxSpawnEventChannel>();
+                return foxSpawnEventChannel;
+            }
         }
     }
 }

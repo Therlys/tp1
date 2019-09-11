@@ -13,6 +13,8 @@ namespace Game
         [SerializeField] private float reproductiveUrgePerSecond = 0.1f;
         [Header("Death")] [SerializeField] private float hungerDeathThreshold = 1f;
         [SerializeField] private float thirstDeathThreshold = 1f;
+        private BunnyDeathEventChannel bunnyDeathEventChannel;
+        private FoxDeathEventChannel foxDeathEventChannel;
         public Type OwnerType = null;
         
         
@@ -40,6 +42,7 @@ namespace Game
             get => reproductiveUrge;
             private set => reproductiveUrge = Mathf.Clamp01(value);
         }
+        
 
         public bool IsDead
         {
@@ -52,6 +55,12 @@ namespace Game
                     NotifyDeath();
                 }
             }
+        }
+
+        private void Awake()
+        {
+            bunnyDeathEventChannel = Finder.BunnyDeathEventChannel;
+            foxDeathEventChannel = Finder.FoxDeathEventChannel;
         }
 
         private void Start()
@@ -73,10 +82,10 @@ namespace Game
                 if (Hunger >= hungerDeathThreshold)
                 {
                     if(OwnerType == typeof(Fox))
-                        Finder.GetStatisticGenerator().FoxHungerDeath();
+                        foxDeathEventChannel.NotifyFoxHungerDeath();
                     else
                     {
-                        Finder.GetStatisticGenerator().BunnyHungerDeath();
+                        bunnyDeathEventChannel.NotifyBunnyHungerDeath();
                     }
                     Die();
                 }
@@ -84,10 +93,10 @@ namespace Game
                 if (Thirst >= thirstDeathThreshold)
                 {
                     if(OwnerType == typeof(Fox))
-                        Finder.GetStatisticGenerator().FoxThirstDeath();
+                        foxDeathEventChannel.NotifyFoxThirstDeath();
                     else
                     {
-                        Finder.GetStatisticGenerator().BunnyThirstDeath();
+                        bunnyDeathEventChannel.NotifyBunnyThirstDeath();
                     }
                     Die();
                 }

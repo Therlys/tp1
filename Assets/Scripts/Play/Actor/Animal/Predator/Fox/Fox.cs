@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -5,6 +6,19 @@ namespace Game
     //Author: Jérémie Bertrand
     public sealed class Fox : Animal, IPredator
     {
+        private FoxSpawnEventChannel foxSpawnEventChannel;
+
+        private new void Awake()
+        {
+            base.Awake();
+            foxSpawnEventChannel = Finder.FoxSpawnEventChannel;
+        }
+
+        private void Start()
+        {
+            foxSpawnEventChannel.NotifyFoxSpawn();
+        }
+
         public override IEatable GetNearestEatable()
         {
             IEatable eatable = null;
