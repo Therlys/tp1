@@ -1,7 +1,8 @@
 using UnityEngine;
 
 namespace Game
-{
+{   
+    //Author: Jérémie Bertrand
     public sealed class Fox : Animal, IPredator
     {
         public override IEatable GetNearestEatable()

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
+    //Author: Jérémie Bertrand
     public class EatState : BaseState
     {
         private readonly Animal animal;

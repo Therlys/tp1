@@ -2,6 +2,7 @@
 
 namespace Game
 {
+    //Author: Mike Bédard
     public class FleeState : BaseState
     {
         private readonly Animal animal;

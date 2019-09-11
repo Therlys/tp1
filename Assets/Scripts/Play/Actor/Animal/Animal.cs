@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
+    //Author: Jérémie Bertrand & Mike Bédard
     public abstract class Animal : Actor
     {
         [Header("Vitals")] [SerializeField] private float hungerThreshold = 0.8f;
@@ -46,7 +47,7 @@ namespace Game
         public bool IsDead => vitals.IsDead;
         public bool IsAvailable => recurTarget == null || !IsRecurring;
 
-        public bool IsRecurring = false;
+        public bool IsRecurring { get; private set; } = false;
 
         protected void Awake()
         {
@@ -75,7 +76,11 @@ namespace Game
         public void StopRecurring(Animal recurTarget)
         {
             if (this.recurTarget == recurTarget) recurTarget = null;
-            
+        }
+
+        public void SetIsRecurring(bool isRecurring)
+        {
+            this.IsRecurring = isRecurring;
         }
 
         private void Update()

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
+    //Author: Jérémie Bertrand
     public class DrinkState : BaseState
     {
         private readonly Animal animal;

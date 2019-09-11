@@ -2,6 +2,7 @@
 
 namespace Game
 {
+    //Author: Jérémie Bertrand & Mike Bédard
     public class SearchState : BaseState
     {
         private readonly Animal animal = null;

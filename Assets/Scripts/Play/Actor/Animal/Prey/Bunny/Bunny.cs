@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Game
 {
+    //Author: Jérémie Bertrand
     public sealed class Bunny : Animal, IPrey
     {
         [Header("Other")] [SerializeField] [Range(0f, 1f)] private float nutritiveValue = 1f;

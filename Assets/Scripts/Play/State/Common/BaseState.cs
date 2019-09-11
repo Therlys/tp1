@@ -1,5 +1,6 @@
 ﻿namespace Game
 {
+    //Author: Jérémie Bertrand
     public abstract class BaseState : IState
     {
         public virtual void Enter()
