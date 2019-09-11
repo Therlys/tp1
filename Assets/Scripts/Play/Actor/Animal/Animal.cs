@@ -31,13 +31,10 @@ namespace Game
         public bool IsFollowingPath => nodes != null;
 
         private string debugStateTag;
-        protected PathFinder PathFinder => pathFinder;
+        private PathFinder PathFinder => pathFinder;
         public VitalStats Vitals => vitals;
         protected Mover Mover => mover;
         protected Feeder Feeder => feeder;
-        //               OffspringCreator :  Sert à reproduire l'animal. Indiquez lui la cible et l'animal se reproduira avec
-        //                                   cette cible si ladite cible est à portée. Lorsque l'animal se reproduit, ses signes
-        //                                   vitaux s'améliorent. Notez que l'animal ne peut pas mourrir d'une carence en ****.
         protected OffspringCreator OffspringCreator => offspringCreator;
         protected Sensor Sensor => sensor;
 
@@ -45,9 +42,9 @@ namespace Game
         public bool IsThirsty => vitals.Thirst > thirstThreshold;
         public bool IsHorny => vitals.ReproductiveUrge > reproductiveUrgeThreshold;
         public bool IsDead => vitals.IsDead;
-        public bool IsAvailable => recurTarget == null || !IsRecurring;
+        public bool IsAvailable => recurTarget == null || !isRecurring;
 
-        public bool IsRecurring { get; private set; } = false;
+        private bool isRecurring = false;
 
         protected void Awake()
         {
@@ -58,7 +55,7 @@ namespace Game
             offspringCreator = GetComponentInChildren<OffspringCreator>();
             sensor = GetComponentInChildren<Sensor>();
             stateMachine = new StateMachine(this);
-            Vitals.OwnerType = this.GetType();
+            vitals.SetOwnerType(this.GetType());
         }
 
         public bool AskToRecur(Animal recurTarget)
@@ -78,7 +75,7 @@ namespace Game
 
         public void SetIsRecurring(bool isRecurring)
         {
-            this.IsRecurring = isRecurring;
+            this.isRecurring = isRecurring;
         }
 
         private void Update()
@@ -220,6 +217,7 @@ namespace Game
         public bool CreateOffspringWith(Animal friend)
         {
             friend.Vitals.HaveSex();
+            this.Vitals.HaveSex();
             friend.StopRecurring(this);
             return offspringCreator.CreateOffspringWith(friend);
         }

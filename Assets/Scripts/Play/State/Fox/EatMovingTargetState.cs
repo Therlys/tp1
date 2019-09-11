@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Game
+﻿namespace Game
 {
     //Author: Jérémie Bertrand
-    public class EatState : BaseState
+    public class EatMovingTargetState : BaseState
     {
         private readonly Animal animal;
 #if UNITY_EDITOR
@@ -19,7 +16,7 @@ namespace Game
         }
         
 
-        public EatState(Animal animal)
+        public EatMovingTargetState(Animal animal)
         {
             this.animal = animal;
         }

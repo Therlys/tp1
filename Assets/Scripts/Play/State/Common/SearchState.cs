@@ -37,7 +37,11 @@ namespace Game
 
             if (animal.IsHungry)
             {
-                return new EatState(animal);
+                if (animal is IPredator)
+                {
+                    return new EatMovingTargetState(animal);
+                }
+                return new EatIdleTargetState(animal);
             }
             if (animal.IsHorny)
             {

@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hungerThreshold: 0.6
   thirstThreshold: 0.6
-  reproductiveUrgeThreshold: 0.8
-  IsRecurring: 0
-  nutritiveValue: 0.2
+  reproductiveUrgeThreshold: 0.9
+  nutritiveValue: 0.4
 --- !u!114 &3811587069204438660
 MonoBehaviour:
   m_ObjectHideFlags: 0

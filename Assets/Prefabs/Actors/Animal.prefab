@@ -279,7 +279,7 @@ MonoBehaviour:
   initialThirst: 0
   initialReproductiveUrge: 0
   hungerPerSecond: 0.01
-  thirstPerSecond: 0.05
+  thirstPerSecond: 0.025
   reproductiveUrgePerSecond: 0.02
   hungerDeathThreshold: 1
   thirstDeathThreshold: 1

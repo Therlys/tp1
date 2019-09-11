@@ -15,15 +15,20 @@ namespace Game
         [SerializeField] private float thirstDeathThreshold = 1f;
         private BunnyDeathEventChannel bunnyDeathEventChannel;
         private FoxDeathEventChannel foxDeathEventChannel;
-        public Type OwnerType = null;
-        
-        
+        private Type ownerType = null;
+
+
         private float hunger;
         private float thirst;
         private float reproductiveUrge;
         private bool isDead;
 
         public event VitalStatsEventHandler OnDeath;
+
+        public void SetOwnerType (Type type)
+        {
+            ownerType = type;
+        }
 
         public float Hunger
         {
@@ -79,25 +84,22 @@ namespace Game
                 Thirst += thirstPerSecond * Time.deltaTime;
                 ReproductiveUrge += reproductiveUrgePerSecond * Time.deltaTime;
 
+                // Author: Mike Bédard
                 if (Hunger >= hungerDeathThreshold)
                 {
-                    if(OwnerType == typeof(Fox))
+                    if(ownerType == typeof(Fox))
                         foxDeathEventChannel.NotifyFoxHungerDeath();
-                    else
-                    {
+                    else if(ownerType == typeof(Bunny))
                         bunnyDeathEventChannel.NotifyBunnyHungerDeath();
-                    }
                     Die();
                 }
 
                 if (Thirst >= thirstDeathThreshold)
                 {
-                    if(OwnerType == typeof(Fox))
+                    if(ownerType == typeof(Fox))
                         foxDeathEventChannel.NotifyFoxThirstDeath();
-                    else
-                    {
+                    else if (ownerType == typeof(Bunny))
                         bunnyDeathEventChannel.NotifyBunnyThirstDeath();
-                    }
                     Die();
                 }
             }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {   
-    //Author: Jérémie Bertrand
+    //Author: Jérémie Bertrand & Mike Bédard
     public sealed class Fox : Animal, IPredator
     {
         private FoxSpawnEventChannel foxSpawnEventChannel;

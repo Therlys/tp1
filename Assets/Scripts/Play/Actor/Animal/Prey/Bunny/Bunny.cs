@@ -2,21 +2,19 @@ using UnityEngine;
 
 namespace Game
 {
-    //Author: Jérémie Bertrand
+    //Author: Jérémie Bertrand & Mike Bédard
     public sealed class Bunny : Animal, IPrey
     {
         [Header("Other")] [SerializeField] [Range(0f, 1f)] private float nutritiveValue = 1f;
 
         private BunnyDeathEventChannel bunnyDeathEventChannel;
         private BunnySpawnEventChannel bunnySpawnEventChannel;
-        private const float MAXIMUM_HUNT_DETECT_DISTANCE = 20f;
+        private const float MAXIMUM_HUNTED_DETECT_DISTANCE = 20f;
         public bool IsEatable => !Vitals.IsDead;
 
         private new void Awake()
         {
             base.Awake();
-            var bunnySensor = Sensor;
-            var predatorSensor = bunnySensor.For<IPredator>();
             bunnyDeathEventChannel = Finder.BunnyDeathEventChannel;
             bunnySpawnEventChannel = Finder.BunnySpawnEventChannel;
         }
@@ -85,7 +83,7 @@ namespace Game
         {
             var predator = GetNearestPredator();
             if (predator == null) return false;
-            return MathExtensions.SquareDistanceBetween(Position, predator.Position) < MAXIMUM_HUNT_DETECT_DISTANCE;
+            return MathExtensions.SquareDistanceBetween(Position, predator.Position) < MAXIMUM_HUNTED_DETECT_DISTANCE;
         }
 
         public IEffect Eat()
