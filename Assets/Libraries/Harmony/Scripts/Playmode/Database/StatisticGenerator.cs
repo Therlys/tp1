@@ -1,13 +1,10 @@
-﻿/*
- * Auteur Classe : Mike Bédard
- */
-
-using System;
+﻿using System;
 using Game;
 using UnityEngine;
 
 namespace Harmony
 {
+    //Author: Mike Bédard
     public class StatisticGenerator : MonoBehaviour
     {
         private Statistic statistic = null;

@@ -1,10 +1,9 @@
-﻿/*
- * Auteur Classe : Mike Bédard
- */
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Author: Mike Bédard
 public class Statistic
 {
 

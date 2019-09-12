@@ -1,5 +1,3 @@
-
-
 namespace Game
 {
     public sealed class BunnyOffspringCreator : OffspringCreator

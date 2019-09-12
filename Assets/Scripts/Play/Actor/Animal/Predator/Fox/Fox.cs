@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 namespace Game
 {   
     //Author: Jérémie Bertrand & Mike Bédard

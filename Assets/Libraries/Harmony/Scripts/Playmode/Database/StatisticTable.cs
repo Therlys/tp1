@@ -1,11 +1,10 @@
-﻿/*
- * Auteur Classe : Mike Bédard
- */
-using System;
+﻿using System;
 
 namespace Harmony
 {
-    public class StatisticTable
+    
+  //Author: Mike Bédard
+  public class StatisticTable
     {
         
         public static String SELECT_ALL = "" +
